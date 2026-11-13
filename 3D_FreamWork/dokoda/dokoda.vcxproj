@@ -129,6 +129,7 @@
 		<ClCompile Include="cameracontroller.cpp" />
 		<ClCompile Include="GameScene.cpp" />
 		<ClCompile Include="main.cpp" />
+		<ClCompile Include="NPC.cpp" />
 		<ClCompile Include="Map.cpp" />
 		<ClCompile Include="OniController.cpp" />
 		<ClCompile Include="Player.cpp" />
@@ -145,6 +146,7 @@
 		<ClInclude Include="Player.h" />
 		<ClInclude Include="PlayerController.h" />
 		<ClInclude Include="StartButton.h" />
+		<ClInclude Include="NPC.h" />
 		<ClInclude Include="TitleScene.h" />
 	</ItemGroup>
   <ItemGroup>
