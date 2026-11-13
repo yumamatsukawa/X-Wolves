@@ -124,39 +124,29 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="Button.cpp" />
-    <ClCompile Include="GameScene.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="StartButton.cpp" />
-    <ClCompile Include="TitleScene.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Button.h" />
-    <ClInclude Include="GameScene.h" />
-    <ClInclude Include="StartButton.h" />
-    <ClCompile Include="Map.cpp" />
-    <ClCompile Include="TitleScene.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Map.h" />
-    <ClCompile Include="cameracontroller.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="OniController.cpp" />
-    <ClCompile Include="TitleScene.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="cameracontroller.h" />
-    <ClInclude Include="OniController.h" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PlayerController.cpp" />
-    <ClCompile Include="TitleScene.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="PlayerController.h" />
-    <ClInclude Include="TitleScene.h" />
-  </ItemGroup>
+	<ItemGroup>
+		<ClCompile Include="Button.cpp" />
+		<ClCompile Include="cameracontroller.cpp" />
+		<ClCompile Include="GameScene.cpp" />
+		<ClCompile Include="main.cpp" />
+		<ClCompile Include="Map.cpp" />
+		<ClCompile Include="OniController.cpp" />
+		<ClCompile Include="Player.cpp" />
+		<ClCompile Include="PlayerController.cpp" />
+		<ClCompile Include="StartButton.cpp" />
+		<ClCompile Include="TitleScene.cpp" />
+	</ItemGroup>
+	<ItemGroup>
+		<ClInclude Include="Button.h" />
+		<ClInclude Include="cameracontroller.h" />
+		<ClInclude Include="GameScene.h" />
+		<ClInclude Include="Map.h" />
+		<ClInclude Include="OniController.h" />
+		<ClInclude Include="Player.h" />
+		<ClInclude Include="PlayerController.h" />
+		<ClInclude Include="StartButton.h" />
+		<ClInclude Include="TitleScene.h" />
+	</ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Engine\Engine.vcxproj">
       <Project>{ea30298e-6fac-420b-9c8e-70b4363ff1f0}</Project>

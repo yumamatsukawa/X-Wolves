@@ -17,6 +17,18 @@
 		<ClCompile Include="Map.cpp">
 			<Filter>Objects</Filter>
 		</ClCompile>
+		<ClCompile Include="OniController.cpp">
+			<Filter>Objects</Filter>
+		</ClCompile>
+		<ClCompile Include="cameracontroller.cpp">
+			<Filter>Objects</Filter>
+		</ClCompile>
+		<ClCompile Include="Player.cpp">
+			<Filter>Objects</Filter>
+		</ClCompile>
+		<ClCompile Include="PlayerController.cpp">
+			<Filter>Components</Filter>
+		</ClCompile>
 	</ItemGroup>
 	<ItemGroup>
 		<Filter Include="Objects">
@@ -45,51 +57,17 @@
 		<ClInclude Include="Map.h">
 			<Filter>Objects</Filter>
 		</ClInclude>
+		<ClInclude Include="OniController.h">
+			<Filter>Objects</Filter>
+		</ClInclude>
+		<ClInclude Include="cameracontroller.h">
+			<Filter>Objects</Filter>
+		</ClInclude>
+		<ClInclude Include="Player.h">
+			<Filter>Objects</Filter>
+		</ClInclude>
+		<ClInclude Include="PlayerController.h">
+			<Filter>Components</Filter>
+		</ClInclude>
 	</ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="TitleScene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="OniController.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="cameracontroller.cpp">
-		<Filter>Objects</Filter>
-	</ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerController.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="Objects">
-      <UniqueIdentifier>{28f5cef3-a0e9-480c-a3d9-47f58315cb4d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scenes">
-      <UniqueIdentifier>{061aab46-4732-45a8-875b-4bb8854dfbe7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Components">
-      <UniqueIdentifier>{fd1b0953-01f3-4571-bb9a-9751691f30c3}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="TitleScene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="OniController.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="cameracontroller.h">
-		<Filter>Objects</Filter>
-	</ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerController.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-  </ItemGroup>
 </Project>
