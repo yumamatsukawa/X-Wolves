@@ -148,6 +148,13 @@
   <ItemGroup>
     <ClInclude Include="cameracontroller.h" />
     <ClInclude Include="OniController.h" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerController.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerController.h" />
     <ClInclude Include="TitleScene.h" />
   </ItemGroup>
   <ItemGroup>
