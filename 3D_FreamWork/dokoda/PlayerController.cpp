@@ -1,4 +1,4 @@
-#include "PlayerController.h"
+ï»¿#include "PlayerController.h"
 #include "../Engine/Core/Input.h"
 #include "../Engine/Physics/RigidbodyComponent.h"
 #include "../Engine/Core/Time.h"
@@ -10,17 +10,17 @@ void PlayerController::Init()
 
 void PlayerController::Update(float dt)
 {
-	// ƒ|[ƒY’†EƒV[ƒ“Ø‚è‘Ö‚¦’†‚Í‘€ì‚ğó‚¯•t‚¯‚È‚¢(dt‚ª0‚È‚Ì‚Åƒ^ƒCƒ}[‚ài‚Ü‚È‚¢)
+	// ãƒãƒ¼ã‚ºä¸­ãƒ»ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆä¸­ã¯æ“ä½œã‚’å—ã‘ä»˜ã‘ãªã„(dtãŒ0ãªã®ã§ã‚¿ã‚¤ãƒãƒ¼ã‚‚é€²ã¾ãªã„)
 	if (Time::IsPaused()) return;
 
-	// Player‚ÌRigitbody‚ğæ“¾
+	// Playerã®Rigitbodyã‚’å–å¾—
 	RigidbodyComponent* rigidbody = GetOwner()->GetComponent<RigidbodyComponent>(); if (!rigidbody) return;
 
-	// ˆÚ“®ˆ—
+	// ç§»å‹•å‡¦ç†
 	DirectX::XMFLOAT3 velocity = { 0.f, 0.f, 0.f };
 
-	if (Input::GetKeyPress(KEY_W)) velocity.y += speed;
-	if (Input::GetKeyPress(KEY_S)) velocity.y -= speed;
+	if (Input::GetKeyPress(KEY_W)) velocity.z += speed;
+	if (Input::GetKeyPress(KEY_S)) velocity.z -= speed;
 	if (Input::GetKeyPress(KEY_A)) velocity.x -= speed;
 	if (Input::GetKeyPress(KEY_D)) velocity.x += speed;
 
