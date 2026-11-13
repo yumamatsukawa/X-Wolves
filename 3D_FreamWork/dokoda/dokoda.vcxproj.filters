@@ -5,6 +5,12 @@
     <ClCompile Include="TitleScene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerController.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Objects">
@@ -20,6 +26,12 @@
   <ItemGroup>
     <ClInclude Include="TitleScene.h">
       <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerController.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
