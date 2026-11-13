@@ -5,6 +5,12 @@
     <ClCompile Include="TitleScene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="OniController.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="cameracontroller.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Objects">
@@ -20,6 +26,12 @@
   <ItemGroup>
     <ClInclude Include="TitleScene.h">
       <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="OniController.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="cameracontroller.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

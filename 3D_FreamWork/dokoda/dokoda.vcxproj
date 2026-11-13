@@ -125,10 +125,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="cameracontroller.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="OniController.cpp" />
     <ClCompile Include="TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="cameracontroller.h" />
+    <ClInclude Include="OniController.h" />
     <ClInclude Include="TitleScene.h" />
   </ItemGroup>
   <ItemGroup>
