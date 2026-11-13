@@ -26,7 +26,7 @@ public:
 
     // ─── 当たり判定のコールバック ───────────────
     // 付いているGameObjectが誰かと当たった時、その全Componentに通知される。
-    // 反応したいComponent(例: PlayerController)だけがoverrideすればよい。
+    // 反応したいComponent(例: MapController)だけがoverrideすればよい。
 
     // すり抜ける当たり判定
     virtual void OnTriggerEnter(Collider2D* other) {}    // あたった瞬間
