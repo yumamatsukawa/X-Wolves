@@ -140,6 +140,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Map.h" />
+    <ClCompile Include="cameracontroller.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="OniController.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="cameracontroller.h" />
+    <ClInclude Include="OniController.h" />
     <ClInclude Include="TitleScene.h" />
   </ItemGroup>
   <ItemGroup>
