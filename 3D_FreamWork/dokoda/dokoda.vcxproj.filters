@@ -32,6 +32,9 @@
     <ClCompile Include="cameracontroller.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="MissionComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Objects">
@@ -73,6 +76,9 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="cameracontroller.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="MissionComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
