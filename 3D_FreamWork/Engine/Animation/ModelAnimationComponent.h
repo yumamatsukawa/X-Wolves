@@ -43,6 +43,8 @@ public:
     bool IsFinished() const { return finished; }
     // 再生の速さ(1=等倍、0=止まる。0未満は0)
     void SetSpeed(float newSpeed) { speed = (newSpeed > 0.f) ? newSpeed : 0.f; }
+    // 再生中のクリップの名前(再生していなければ空)。CrossFade中は切り替え先のクリップ名。終わったクリップは最後のポーズで止まっていても、その名前を返す
+    std::string GetCurrentClip() const;
     // 入っているクリップ名の一覧(確認用)
     std::vector<std::string> GetClipNames() const;
 };
