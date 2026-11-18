@@ -19,8 +19,49 @@ namespace Input {
     bool cursorHidden = false;                     // ShowCursor(FALSE)でカーソルを隠しているか(ShowCursorを必ず対で呼ぶため)
     bool wasActive = false;                        // 前のフレームでウィンドウがアクティブだったか
 
+    float wheelAccum = 0.f;                        // メッセージで届いたホイール量のたまり(ノッチ単位。Updateで0に戻す)
+    float wheelFrame = 0.f;                        // このフレームのホイール量(GetMouseWheelで返す)
+
+    namespace {
+        WNDPROC originalWndProc = nullptr;         // 差し替える前のWndProc(必ずここへ引き継ぐ)
+        HWND    hookedHwnd = nullptr;              // WndProcを差し替えたウィンドウ
+
+        // 差し替え用のWndProc。ホイールの量をためるだけで、メッセージは元のWndProcへそのまま渡す
+        LRESULT CALLBACK WheelWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+            if (msg == WM_MOUSEWHEEL) {
+                wheelAccum += (float)GET_WHEEL_DELTA_WPARAM(wParam) / (float)WHEEL_DELTA;
+            }
+            if (originalWndProc) return CallWindowProc(originalWndProc, hwnd, msg, wParam, lParam);
+            return DefWindowProc(hwnd, msg, wParam, lParam);
+        }
+
+        // 差し替えたWndProcを元に戻す(まだ自分のWndProcのままの時だけ。他で差し替えられていたら触らない)
+        void UnhookWindow() {
+            if (hookedHwnd && IsWindow(hookedHwnd) &&
+                (WNDPROC)GetWindowLongPtr(hookedHwnd, GWLP_WNDPROC) == WheelWndProc) {
+                SetWindowLongPtr(hookedHwnd, GWLP_WNDPROC, (LONG_PTR)originalWndProc);
+            }
+            hookedHwnd = nullptr;
+            originalWndProc = nullptr;
+        }
+    }
+
     void SetHwnd(HWND hwnd) {
         targetHwnd = hwnd;
+
+        // 同じウィンドウに二重に差し込まない
+        if (hwnd == hookedHwnd) return;
+        UnhookWindow();
+        wheelAccum = 0.f;
+        wheelFrame = 0.f;
+        if (!hwnd || !IsWindow(hwnd)) return;
+
+        // ホイール用にWndProcを差し替える(main.cppの変更は不要)。元のWndProcは保存して、必ず引き継ぐ
+        WNDPROC current = (WNDPROC)GetWindowLongPtr(hwnd, GWLP_WNDPROC);
+        if (current == WheelWndProc) return;
+        originalWndProc = current;
+        SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)WheelWndProc);
+        hookedHwnd = hwnd;
     }
 
     namespace {
@@ -58,6 +99,10 @@ namespace Input {
     void Update() {
         memcpy(previousKey, currentKey, sizeof(currentKey));
         GetKeyboardState(currentKey);
+
+        // マウスホイール: たまった量をこのフレームの量に移して、たまりを0に戻す
+        wheelFrame = wheelAccum;
+        wheelAccum = 0.f;
 
         // マウス座標(クライアント座標)
         if (targetHwnd) GetClientRect(targetHwnd, &clientRect);
@@ -143,6 +188,10 @@ namespace Input {
 
     DirectX::XMFLOAT2 GetMouseDelta() {
         return mouseDelta;
+    }
+
+    float GetMouseWheel() {
+        return wheelFrame;
     }
 
     // ─── カーソルの固定 ───────────────────────

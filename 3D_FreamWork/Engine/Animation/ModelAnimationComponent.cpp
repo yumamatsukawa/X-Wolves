@@ -26,6 +26,12 @@ std::vector<std::string> ModelAnimationComponent::GetClipNames() const {
     return names;
 }
 
+std::string ModelAnimationComponent::GetCurrentClip() const {
+    // clipIndexから名前を引く(未再生・範囲外は空)
+    if (!model || clipIndex < 0 || clipIndex >= model->GetClipCount()) return std::string();
+    return model->GetClip(clipIndex).name;
+}
+
 bool ModelAnimationComponent::StartClip(const std::string& clipName, bool loopPlay) {
     if (!renderer || !model) return false;
 
