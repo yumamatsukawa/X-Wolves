@@ -35,6 +35,9 @@
     <ClCompile Include="MissionComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="MissionPoint.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Objects">
@@ -80,6 +83,9 @@
     </ClInclude>
     <ClInclude Include="MissionComponent.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="MissionPoint.h">
+      <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
