@@ -44,4 +44,48 @@ public:
         else objects.push_back(std::move(obj));
         return ptr;
     }
+
+    // -------- 検索 ----------------------------------------------------------------
+    // 破棄予定の物は対象外。
+    // Update中にCreateObjectされてpendingに居る物も見つかる。
+
+    // 名前が一致する最初の1つ。無ければnullptr
+    GameObject* FindObject(const std::string& name) const {
+        return FindFirst([&](const GameObject& o) { return o.GetName() == name; });
+    }
+
+    // タグが一致する最初の1つ。無ければnullptr
+    GameObject* FindObjectWithTag(const std::string& tag) const {
+        return FindFirst([&](const GameObject& o) { return o.GetTag() == tag; });
+    }
+
+    // 名前が一致するすべて。無ければ空
+    std::vector<GameObject*> FindObjects(const std::string& name) const {
+        return FindAll([&](const GameObject& o) { return o.GetName() == name; });
+    }
+
+    // タグが一致するすべて。無ければ空
+    std::vector<GameObject*> FindObjectsWithTag(const std::string& tag) const {
+        return FindAll([&](const GameObject& o) { return o.GetTag() == tag; });
+    }
+
+private:
+    template<typename Pred>
+    GameObject* FindFirst(Pred pred) const {
+        for (const auto& o : objects)
+            if (!o->GetIsDestroyed() && pred(*o)) return o.get();
+        for (const auto& o : pendingObjects)
+            if (!o->GetIsDestroyed() && pred(*o)) return o.get();
+        return nullptr;
+    }
+
+    template<typename Pred>
+    std::vector<GameObject*> FindAll(Pred pred) const {
+        std::vector<GameObject*> result;
+        for (const auto& o : objects)
+            if (!o->GetIsDestroyed() && pred(*o)) result.push_back(o.get());
+        for (const auto& o : pendingObjects)
+            if (!o->GetIsDestroyed() && pred(*o)) result.push_back(o.get());
+        return result;
+    }
 };
