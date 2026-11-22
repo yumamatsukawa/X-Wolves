@@ -15,6 +15,7 @@ private:
 	unsigned int itemID = 0;   // 必要アイテム
 	float duration = 0.0f;
 	int count = 1;
+	float radius = 1.0f;       // ミッションポイントの反応半径(座標はCSVからownerのtransformへ反映)
 
 	// 進捗
 	float elapsed = 0.0f;

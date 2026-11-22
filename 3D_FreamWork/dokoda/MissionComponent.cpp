@@ -21,11 +21,17 @@ void MissionComponent::Init()
 	itemID = static_cast<unsigned int>(table.GetInt(row, "ItemID", 0));
 	duration = table.GetFloat(row, "Duration", 0.0f);
 	count = table.GetInt(row, "Count", 1);
+
+	GetOwner()->transform.position = {
+		table.GetFloat(row, "PosX", 0.0f),
+		table.GetFloat(row, "PosY", 0.0f),
+		table.GetFloat(row, "PosZ", 0.0f) };
+	radius = table.GetFloat(row, "Radius", 1.0f);
 }
 
 void MissionComponent::Update(float dt)
 {
-	bool nearby = Physics::OverlapSphere(GetOwner()->transform.position, GetOwner()->transform.scale.x, "Player").empty();
+	bool nearby = Physics::OverlapSphere(GetOwner()->transform.position, radius, "Player").empty();
 	if (cleared || nearby) return;
 
 	switch (type) {

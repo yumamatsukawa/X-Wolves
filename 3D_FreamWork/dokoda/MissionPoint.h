@@ -3,4 +3,5 @@
 
 class Scene;
 class GameObject;
-GameObject* CreateMissionPoint(Scene& scene, Transform transform, int missionId);
+// 座標と半径は Missions.csv(PosX/PosY/PosZ/Radius)から読む
+GameObject* CreateMissionPoint(Scene& scene, int missionId);

@@ -4,10 +4,9 @@
 #include "../Engine/Render3D/MeshRenderer.h"
 #include "MissionComponent.h"
 
-GameObject* CreateMissionPoint(Scene& scene, Transform transform, int missionId)
+GameObject* CreateMissionPoint(Scene& scene, int missionId)
 {
 	GameObject* mp = scene.CreateObject("MissionPoint", "MissionPoint");
-	mp->transform = transform;
 
 	mp->AddComponent<MissionComponent>(missionId);
 

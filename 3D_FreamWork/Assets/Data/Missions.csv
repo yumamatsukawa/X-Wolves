@@ -1,4 +1,4 @@
-﻿Id,Type,EmoteTag,KeyID,ItemID,Duration,Count,Name
-0,0,jump,0,0,0,20,ジャンプを20回
-1,1,,69,0,10,1,Eキーを10秒
-2,2,,0,0,0,1,手紙を持つ
+﻿Id,Type,EmoteTag,KeyID,ItemID,Duration,Count,PosX,PosY,PosZ,Radius,Name
+0,0,jump,0,0,0,20,0,0,0,3,ジャンプを20回
+1,1,,69,0,10,1,0,0,0,3,Eキーを10秒
+2,2,,0,0,0,1,0,0,0,3,手紙を持つ
