@@ -38,6 +38,9 @@
     <ClCompile Include="UniqueNpc.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="NpcSpawner.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Objects">
@@ -85,6 +88,9 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="UniqueNpc.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="NpcSpawner.h">
       <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>

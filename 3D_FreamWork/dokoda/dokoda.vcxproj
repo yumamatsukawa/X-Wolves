@@ -132,6 +132,7 @@
     <ClCompile Include="NPC.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="NpcController.cpp" />
+    <ClCompile Include="NpcSpawner.cpp" />
     <ClCompile Include="OniController.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerController.cpp" />
@@ -145,6 +146,7 @@
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="NpcController.h" />
+    <ClInclude Include="NpcSpawner.h" />
     <ClInclude Include="OniController.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerController.h" />
