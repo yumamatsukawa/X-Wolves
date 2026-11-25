@@ -12,13 +12,16 @@ GameObject* CreatePlayer(Scene& scene)
 	GameObject* player = scene.CreateObject("Player", "Player");
 	player->transform.position	= { 0.0f, 1.0f, 0.0f };
 	player->transform.scale = { 10.0f, 10.0f, 10.0f };
-
-	auto* mesh = player->AddComponent<MeshRenderer>(Mesh::CreateCube());
-	mesh->SetColor(0.0f,0.0f,0.0f,1.0f);
-
-	// 当たり判定+物理演算(PhysX)
-	auto* rigidbody = player->AddComponent<BoxRigidbodyComponent>(BodyType::Dynamic, player->transform.scale, 100.f);
 	
+	constexpr float radius = 0.5f;
+	constexpr float halfHeight = 0.5f;
+	auto* rigidbody = player->AddComponent<CapsuleRigidbodyComponent>(
+		BodyType::Dynamic,
+		radius,
+		halfHeight,
+		100.f
+	);
+
 	// 重力をつける
 	rigidbody->SetUseGravity(true);
 
