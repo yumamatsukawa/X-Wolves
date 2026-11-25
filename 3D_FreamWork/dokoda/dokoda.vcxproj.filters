@@ -35,6 +35,11 @@
     <ClCompile Include="GameManager.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="EventManager.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="MissionManager.cpp" />
+    <ClCompile Include="ManagerObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Objects">
@@ -80,6 +85,15 @@
     </ClInclude>
     <ClInclude Include="GameManager.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="EventManager.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="MissionManager.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ManagerObject.h">
+      <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

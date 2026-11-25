@@ -127,9 +127,12 @@
   <ItemGroup>
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="cameracontroller.cpp" />
+    <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ManagerObject.cpp" />
+    <ClCompile Include="MissionManager.cpp" />
     <ClCompile Include="NPC.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="OniController.cpp" />
@@ -141,9 +144,12 @@
   <ItemGroup>
     <ClInclude Include="Button.h" />
     <ClInclude Include="cameracontroller.h" />
+    <ClInclude Include="EventManager.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameScene.h" />
+    <ClInclude Include="ManagerObject.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="MissionManager.h" />
     <ClInclude Include="OniController.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerController.h" />
