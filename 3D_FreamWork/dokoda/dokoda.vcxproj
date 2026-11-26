@@ -129,6 +129,7 @@
     <ClCompile Include="cameracontroller.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="LightController.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MissionComponent.cpp" />
     <ClCompile Include="MissionPoint.cpp" />
@@ -147,6 +148,7 @@
     <ClInclude Include="cameracontroller.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameScene.h" />
+    <ClInclude Include="LightController.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MissionComponent.h" />
     <ClInclude Include="MissionPoint.h" />
