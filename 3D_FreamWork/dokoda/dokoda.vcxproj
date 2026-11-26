@@ -132,6 +132,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MissionComponent.cpp" />
     <ClCompile Include="MissionPoint.cpp" />
+    <ClCompile Include="Navigation.cpp" />
     <ClCompile Include="NPC.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="NpcController.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="MissionComponent.h" />
     <ClInclude Include="MissionPoint.h" />
+    <ClInclude Include="Navigation.h" />
     <ClInclude Include="NpcController.h" />
     <ClInclude Include="OniController.h" />
     <ClInclude Include="Player.h" />
