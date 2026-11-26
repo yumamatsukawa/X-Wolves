@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "../Engine/Core/Component.h"
 #include "NPC.h"
 #include "../Engine/Core/Input.h"
@@ -17,50 +17,50 @@ private:
 
 		NpcType Npctype= NpcType::Ghost;
 
-		// Œ»İ‚Ìs“®
+		// ç¾åœ¨ã®è¡Œå‹•
 		MoveType Movetype= MoveType::Dance;
 
-		// ˆÚ“®æ
+		// ç§»å‹•å…ˆ
 		XMFLOAT3 Destination;
 		bool IsMoving = false;
 
-		//s“®‚ÉŠÖ‚·‚éƒf[ƒ^
+		//è¡Œå‹•ã«é–¢ã™ã‚‹ãƒ‡ãƒ¼ã‚¿
 		NpcAction* ActionData;
 
-		// ‘Ò‹@ŠÔ
+		// å¾…æ©Ÿæ™‚é–“
 		float WaitTime = 0.0f;
 
-		// Œo‰ßŠÔ
+		// çµŒéæ™‚é–“
 		float Timer = 0.0f;
 
-		// ˆÚ“®‘¬“x
+		// ç§»å‹•é€Ÿåº¦
 		float Speed = 0.0f;
 
 		//
 		PathFollowComponent* Path = nullptr;
 
 
-		// “ÁêƒAƒNƒVƒ‡ƒ“ƒGƒŠƒA“à‚©
+		// ç‰¹æ®Šã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã‚¨ãƒªã‚¢å†…ã‹
 		bool IsSpecialArea = false;
 
-		//ƒ_ƒ“ƒX’†‚©
+		//ãƒ€ãƒ³ã‚¹ä¸­ã‹
 		bool isDance = false;
 
-		//‘–‚Á‚Ä‚¢‚é‚©
+		//èµ°ã£ã¦ã„ã‚‹ã‹
 		bool isDash = false;
 
-		// ‘Ò‹@ŠÔ‚Ìƒ^ƒCƒ}[
+		// å¾…æ©Ÿæ™‚é–“ã®ã‚¿ã‚¤ãƒãƒ¼
 		float waitTimer = 0;
 
-		bool IsGrounded = false;  // ’n–Ê‚ÉÚG‚µ‚Ä‚¢‚é‚©
-		bool IsJumping = false;   // ƒWƒƒƒ“ƒv’†‚©
-		float JumpPower = 10.0f;  // ƒWƒƒƒ“ƒv—Í
-		float JumpTimer = 0.0f;       // Ÿ‚Ì’Š‘I‚Ü‚Å‚ÌŠÔ
-		float JumpElapsed = 0.0f;     // ƒWƒƒƒ“ƒvŒo‰ßŠÔ
+		bool IsGrounded = false;  // åœ°é¢ã«æ¥è§¦ã—ã¦ã„ã‚‹ã‹
+		bool IsJumping = false;   // ã‚¸ãƒ£ãƒ³ãƒ—ä¸­ã‹
+		float JumpPower = 10.0f;  // ã‚¸ãƒ£ãƒ³ãƒ—åŠ›
+		float JumpTimer = 0.0f;       // æ¬¡ã®æŠ½é¸ã¾ã§ã®æ™‚é–“
+		float JumpElapsed = 0.0f;     // ã‚¸ãƒ£ãƒ³ãƒ—çµŒéæ™‚é–“
 
 	};
-	float NpcWalkSpeed = 10;//•à‚­ƒXƒs[ƒh
-	float NpcDashSpeed = 20;//ƒ_ƒbƒVƒ…ƒXƒs[ƒh
+	float NpcWalkSpeed = 10;//æ­©ãã‚¹ãƒ”ãƒ¼ãƒ‰
+	float NpcDashSpeed = 20;//ãƒ€ãƒƒã‚·ãƒ¥ã‚¹ãƒ”ãƒ¼ãƒ‰
 	NpcData* NPC[NPC_MAX];
 	NavGridComponent* nav = nullptr;
 	int npcCount = 0;
@@ -85,9 +85,10 @@ public:
 };
 enum class Event
 {
-	Dance,// ƒ_ƒ“ƒX
+	Dance,// ãƒ€ãƒ³ã‚¹
 	Jukebox,//
 	Switch,//
 	Count
 };
-std::vector<GameObject*> MissionPoints;
+
+extern std::vector<GameObject*> MissionPoints;

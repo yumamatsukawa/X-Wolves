@@ -5,7 +5,7 @@
 
 void PlayerController::Init()
 { 
-	speed = 200.0f;
+	speed = 20.0f;
 }
 
 void PlayerController::Update(float dt)

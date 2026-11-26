@@ -1,4 +1,4 @@
-#include "NpcController.h"
+﻿#include "NpcController.h"
 #include"Map.h"
 #include"MissionPoint.h"
 #include"../Engine/Core/Scene.h"
@@ -8,6 +8,8 @@
 #include "../Engine/Core/MathUtil.h"
 #include"../Engine/Behavior/PathFollowComponent.h"
 #include"../Engine/Core/EventBus.h"
+
+std::vector<GameObject*> MissionPoints;
 
 NpcPersonality MoveData[static_cast<int>(ActionType::Count)]//性格による各確率の変化
 {

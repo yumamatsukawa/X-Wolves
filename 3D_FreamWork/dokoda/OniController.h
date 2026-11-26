@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 class Scene;
 class GameObject;
 
@@ -8,5 +8,5 @@ enum class CameraMode
 	Overhead,
 };
 
-GameObject* CreateCamera(Scene& scene);
+GameObject* CreateCamera(Scene& scene, CameraMode mode);
 GameObject* CreateOni(Scene& scene);
