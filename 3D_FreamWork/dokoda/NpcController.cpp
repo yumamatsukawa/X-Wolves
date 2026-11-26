@@ -1,57 +1,16 @@
-#include "NpcController.h"
-#include "NPC.h"
+﻿#include "NpcController.h"
+#include"Map.h"
+#include"MissionPoint.h"
+#include"../Engine/Core/Scene.h"
 #include "../Engine/Core/Input.h"
 #include "../Engine/Physics/RigidbodyComponent.h"
 #include "../Engine/Core/Time.h"
 #include "../Engine/Core/MathUtil.h"
 #include"../Engine/Behavior/PathFollowComponent.h"
-struct NpcData
-{
-	GameObject* object = nullptr;
+#include"../Engine/Core/EventBus.h"
 
-	NpcType Npctype;
+std::vector<GameObject*> MissionPoints;
 
-	// 現在の行動
-	MoveType Movetype;
-
-	// 移動先
-	XMFLOAT3 Destination;
-	bool IsMoving = false;
-
-    //行動に関するデータ
-	NpcAction* ActionData;
-
-	// 待機時間
-	float WaitTime = 0.0f;
-
-	// 経過時間
-	float Timer = 0.0f;
-
-	// 移動速度
-	float Speed = 0.0f;
-
-    //
-    PathFollowComponent* Path = nullptr;
-
-    NavGridComponent* nav = nullptr;
-
-	// 特殊アクションエリア内か
-	bool IsSpecialArea = false;
-
-    //ダンス中か
-    bool isDance=false;
-
-    //走っているか
-    bool isDash=false;
-
-	// 待機時間のタイマー
-    float waitTimer=0;
-
-   
-  
-};
-float NpcWalkSpeed = 10;//歩くスピード
-float NpcDashSpeed = 20;//ダッシュスピード
 NpcPersonality MoveData[static_cast<int>(ActionType::Count)]//性格による各確率の変化
 {
     // Stop
@@ -95,22 +54,36 @@ NpcPersonality MoveData[static_cast<int>(ActionType::Count)]//性格による各
         }
     }
 };
-NpcData* NPC[NPC_MAX];
-Event event;
-int npcCount = 0;
+
 void NpcController::Init()
 {
- 
+   
+        // ダンスイベント
+        EventBus::Get().Subscribe("Dance", [this]() {
+            OnDanceEvent();
+            });
+
+        // ジュークボックスイベント
+        EventBus::Get().Subscribe("Jukebox", [this]() {
+            OnJukeboxEvent();
+            });
+
+        // スイッチイベント
+        EventBus::Get().Subscribe("Switch", [this]() {
+            OnSwitchEvent();
+            });
+    
     for (int i = 0; i < static_cast<int>(NpcType::Count); i++)
     {
         for (int j = 0; j < NPC_MAX / static_cast<int>(NpcType::Count); j++)
         {
             NpcType type = static_cast<NpcType>(i);
+            NPC[npcCount] = new NpcData();
             XMFLOAT3 pos;
 
             //行動できるエリアの受け取るプログラムが必要
-            NPC[npcCount]->ActionData->MINMove.x;
-            NPC[npcCount]->ActionData->MAXMove.x;
+            NPC[npcCount]->ActionData->MINMove.x=0;
+            NPC[npcCount]->ActionData->MAXMove.x=100;
 
           
             while (true)
@@ -123,6 +96,7 @@ void NpcController::Init()
                 if (CheckDestination({ x, 0.0f, z }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }))
                 {
                     pos = { x, 0.0f, z };
+                    break;
                 }
             }
 			NPC[npcCount]->object = CreateNpc(*GetOwner()->GetScene(), type, pos);
@@ -131,9 +105,9 @@ void NpcController::Init()
             NPC[npcCount]->Movetype = MoveType::Wait;
             NPC[npcCount]->Path = NPC[npcCount]->object->AddComponent<PathFollowComponent>();
             NPC[npcCount]->Path->SetPlane(MovePlane::XZ);
-            NPC[npcCount]->Path->SetNavigation(NPC[npcCount]->nav);
-            NPC[npcCount]->Path->SetSpeed(NPC[npcCount]->Speed);
-			
+            NPC[npcCount]->Path->SetNavigation(nav);
+            NPC[npcCount]->Path->SetSpeed(NpcWalkSpeed);
+
 			npcCount++;
                
             
@@ -144,27 +118,31 @@ void NpcController::Update(float dt)
 {
     if (Time::IsPaused()) return;
 
-    //イベントが発生したか受け取るプログラム
 
     for (int NPC_No = 0; NPC_No < npcCount; NPC_No++)
     {
-        
+        //着地確認
+        NPC[NPC_No]->IsGrounded = CheckGrounded(NPC[NPC_No]->object);
+
         if (NPC[NPC_No]->IsMoving)
         {
             NpcSetDestination(NPC_No);
         }
         else
         {
+            
             switch (NPC[NPC_No]->Movetype)
             {
             case MoveType::Move:
                 // 目的地に向かって移動
                 NpcMove(NPC_No, dt);
+                NpcJump(NPC_No, dt);
                 break;
 
             case MoveType::Wait:
                 // 一定時間待機
                 NpcWait(NPC_No, dt);
+                NpcJump(NPC_No, dt);
                 break;
 
             case MoveType::SpecialAction:
@@ -180,34 +158,39 @@ void NpcController::Update(float dt)
         }
     }
 }
-void NpcController::OnCollisionEnter(CollisionInfo info)
-{
-    if (info.other == nullptr) return;
-
-    if (info.other->GetTag() == "NPC" ||
-        info.other->GetTag() == "Player")
-    {
-      // 衝突した相手がNPCまたはPlayerの場合の処理
-		// ここに衝突時の処理を追加することができます
-    }
-}
-void NpcSetDestination(int NPC_No)
+void NpcController::NpcSetDestination(int NPC_No)
 {
     int random = Math::RandomRange(0, 1);
     if (random==0)
     {
-        NPC[NPC_No]->Speed = NpcWalkSpeed;
+        NPC[npcCount]->Path->SetSpeed(NpcWalkSpeed);
     }
     else
     {
-        NPC[NPC_No]->Speed = NpcDashSpeed;
-
+        NPC[npcCount]->Path->SetSpeed(NpcDashSpeed);
     }
-    if (NPC[NPC_No]->Movetype==MoveType::SpecialAction)
-    {
-		// 特殊行動の目的地の座標の獲得
+    random = Math::RandomRange(0, 1);
 
-        NPC[NPC_No]->Destination;//= 目的地の座標;
+    if (NPC[NPC_No]->Movetype == MoveType::SpecialAction)
+    {
+        // ポイントが存在するか確認
+        if (MissionPoints.empty())
+        {
+            return;
+        }
+
+        // ランダムにポイントを選択
+        int index = Math::RandomRange(
+            0,
+            static_cast<int>(MissionPoints.size()) - 1
+        );
+
+        // 選択したポイントの座標を取得
+        XMFLOAT3 pos = MissionPoints[index]->transform.position;
+
+        // NPCの目的地に設定
+        NPC[NPC_No]->Destination = pos;
+
         NPC[NPC_No]->Path->SetTargetPosition(
             NPC[NPC_No]->Destination
         );
@@ -219,10 +202,15 @@ void NpcSetDestination(int NPC_No)
     {
         float x = Math::RandomRange(NPC[NPC_No]->ActionData->MINMove.x, NPC[NPC_No]->ActionData->MAXMove.x);
         float z = Math::RandomRange(NPC[NPC_No]->ActionData->MINMove.z, NPC[NPC_No]->ActionData->MAXMove.z);
+        
+       
         //ここに建物の位置とサイズを取得する処理を追加する必要があります。
+        Scene* scene = GetOwner()->GetScene();
+
+        GameObject* Map = CreateGround(*scene);
 
     // 目的地が建物と重なっていないかチェック
-        if (CheckDestination({ x, 0.0f, z }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }))
+        if (CheckDestination({ x, 0.0f, z }, Map->transform.position, Map->transform.scale))
         {
             NPC[NPC_No]->Destination = { x, 0.0f, z };
             NPC[NPC_No]->Path->SetTargetPosition(
@@ -236,7 +224,7 @@ void NpcSetDestination(int NPC_No)
    
 	
 }
-void NpcWait(int NPC_No, float dt)
+void NpcController::NpcWait(int NPC_No, float dt)
 {
     
     // 経過時間を加算
@@ -281,7 +269,7 @@ void NpcWait(int NPC_No, float dt)
         }
     }
 }
-void NpcMove(int NPC_No, float dt)
+void NpcController::NpcMove(int NPC_No, float dt)
 {
     // 経路が見つかっているか確認
     if (!NPC[NPC_No]->Path->HasPath())
@@ -336,7 +324,7 @@ void NpcMove(int NPC_No, float dt)
         }
     }
 }
-void NpcSpecialAction(int NPC_No, float dt)
+void NpcController::NpcSpecialAction(int NPC_No, float dt)
 {
     // 経過時間を加算
     NPC[NPC_No]->waitTimer += dt;
@@ -385,7 +373,7 @@ void NpcSpecialAction(int NPC_No, float dt)
         }
     }
 }
-void NpcDance(int NPC_No, float dt)
+void NpcController::NpcDance(int NPC_No, float dt)
 {
 
     // 経過時間を加算
@@ -433,92 +421,66 @@ void NpcDance(int NPC_No, float dt)
         }
     }
 }
-void NpcEvent(int NPC_No, float dt)
+void NpcController::OnDanceEvent()
 {
-    switch (event)
+    for (int i = 0; i < npcCount; i++)
     {
-    case Event::Dance:
-    {
-        for (int NPC_No = 0; NPC_No < npcCount; NPC_No++)
-        {
-            NPC[NPC_No]->Movetype = MoveType::Dance;
-        }
-        break;
-    }
-
-    case Event::Jukebox:
-    {
-        // ジュークボックスの座標を受け取る
-        XMFLOAT3 jukebox;
-
-        // ジュークボックスに向かえるNPCを探す
-        std::vector<int> candidates;
-
-        for (int NPC_No = 0; NPC_No < npcCount; NPC_No++)
-        {
-            // 待機中のNPCだけ対象
-            if (NPC[NPC_No]->Movetype != MoveType::Wait)
-                continue;
-
-            // 行動範囲内か確認
-            // NPCの現在位置とジュークボックスの距離を確認する
-
-            candidates.push_back(NPC_No);
-        }
-
-        // 候補が存在する場合
-        if (!candidates.empty())
-        {
-            // 候補からランダムに1人選択
-            int randomIndex = rand() % candidates.size();
-            int selectedNPC = candidates[randomIndex];
-
-            // 選ばれたNPCだけジュークボックスへ移動
-            NPC[selectedNPC]->Destination = jukebox;
-            NPC[selectedNPC]->Movetype = MoveType::SpecialAction;
-            NPC[selectedNPC]->IsMoving = true;
-        }
-
-        break;
-    }
-
-    case Event::Switch:
-    {
-        // スイッチの座標を受け取る
-        XMFLOAT3 Switch;
-
-        // スイッチに向かえるNPCを探す
-        std::vector<int> candidates;
-
-        for (int NPC_No = 0; NPC_No < npcCount; NPC_No++)
-        {
-            // 行動範囲内か確認
-            // NPCの現在位置とスイッチの距離を確認する
-
-            candidates.push_back(NPC_No);
-        }
-
-        // 候補が存在する場合
-        if (!candidates.empty())
-        {
-            // 候補からランダムに1人選択
-            int randomIndex = rand() % candidates.size();
-            int selectedNPC = candidates[randomIndex];
-
-            // 選ばれたNPCだけスイッチへ移動
-            NPC[selectedNPC]->Destination = Switch;
-            NPC[selectedNPC]->Movetype = MoveType::SpecialAction;
-            NPC[selectedNPC]->IsMoving = true;
-        }
-
-        break;
-    }
-
-    default:
-        break;
+        NPC[i]->Movetype = MoveType::Dance;
     }
 }
-bool CheckDestination(
+void NpcController::OnJukeboxEvent()
+{
+    XMFLOAT3 jukebox= { 0,0,0 };
+
+    //ジュークボックスの位置を受け取る
+
+    std::vector<int> candidates;
+
+    for (int i = 0; i < npcCount; i++)
+    {
+        // 待機中のNPCだけ対象
+        if (NPC[i]->Movetype != MoveType::Wait)
+            continue;
+
+        // 候補に追加
+        candidates.push_back(i);
+    }
+
+    // 候補が存在する場合
+    if (!candidates.empty())
+    {
+        int randomIndex = rand() % candidates.size();
+        int selectedNPC = candidates[randomIndex];
+
+        NPC[selectedNPC]->Destination = jukebox;
+        NPC[selectedNPC]->Movetype = MoveType::SpecialAction;
+        NPC[selectedNPC]->IsMoving = true;
+    }
+}
+void NpcController::OnSwitchEvent()
+{
+    XMFLOAT3 switchPosition = { 0,0,0 };
+
+    //スイッチの位置を受け取る
+
+    std::vector<int> candidates;
+
+    for (int i = 0; i < npcCount; i++)
+    {
+        candidates.push_back(i);
+    }
+
+    if (!candidates.empty())
+    {
+        int randomIndex = rand() % candidates.size();
+        int selectedNPC = candidates[randomIndex];
+
+        NPC[selectedNPC]->Destination = switchPosition;
+        NPC[selectedNPC]->Movetype = MoveType::SpecialAction;
+        NPC[selectedNPC]->IsMoving = true;
+    }
+}
+bool NpcController::CheckDestination(
     const XMFLOAT3& destination,
     const XMFLOAT3& buildingPosition,
     const XMFLOAT3& buildingSize)
@@ -536,4 +498,78 @@ bool CheckDestination(
 
     return true; // 移動可能
 }
+void NpcController::Setup(NavGridComponent* navigation)
+{
+      nav = navigation;
+}
+void NpcController::NpcJump(int NPC_No, float dt)
+{
+    // 地面にいない場合はジャンプできない
+    if (!NPC[NPC_No]->IsGrounded)
+    {
+        return;
+    }
 
+    // Rigidbodyを取得
+    RigidbodyComponent* rb =
+        NPC[NPC_No]->object->GetComponent<RigidbodyComponent>();
+
+    if (rb == nullptr)
+    {
+        return;
+    }
+
+    // 抽選までの時間を減らす
+    NPC[NPC_No]->JumpTimer -= dt;
+
+    if (NPC[NPC_No]->JumpTimer > 0.0f)
+    {
+        return;
+    }
+
+    // 次の抽選まで3～8秒待つ
+    NPC[NPC_No]->JumpTimer = Math::RandomRange(3.0f, 8.0f);
+
+    // 30%の確率でジャンプ
+    int random = Math::RandomRange(0, 99);
+
+    if (random < 30)
+    {
+        // 上方向にジャンプ
+        rb->SetVelocity({
+            0.0f,
+            NPC[NPC_No]->JumpPower,
+            0.0f
+            });
+
+        NPC[NPC_No]->IsGrounded = false;
+        NPC[NPC_No]->IsJumping = true;
+    }
+}
+bool NpcController::CheckGrounded(GameObject* npc)
+{
+    // NPCの現在位置
+    XMFLOAT3 position = npc->transform.position;
+
+    // NPCの足元から少し下にずらす
+    XMFLOAT3 origin = {
+        position.x,
+        position.y - 0.5f,
+        position.z
+    };
+
+    // 下方向
+    XMFLOAT3 direction = { 0.0f, -1.0f, 0.0f };
+
+    // 判定結果を受け取る変数
+    RaycastHit hit;
+
+    // 地面との衝突判定
+    if (Physics::Raycast(origin, direction, 0.2f,
+        hit, "Ground", QueryTriggers::Ignore))
+    {
+        return true;
+    }
+
+    return false;
+}

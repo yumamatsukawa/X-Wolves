@@ -18,7 +18,7 @@ void CameraController::Update(float dt) {
     Camera& camera3D = Image::GetCamera3D();
 
     XMFLOAT3 pos = GetOwner()->transform.position;
-    camera3D.position = { pos.x, pos.y + 100 , pos.z - 100};
+    camera3D.position = { pos.x, pos.y + 20 , pos.z - 20};
     camera3D.target = { pos.x, pos.y , pos.z + 1.0f };
     camera3D.up = { 0, 0, 1};
 }

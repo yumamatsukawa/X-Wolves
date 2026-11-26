@@ -10,17 +10,20 @@
 GameObject* CreatePlayer(Scene& scene)
 {
 	GameObject* player = scene.CreateObject("Player", "Player");
-	player->transform.position	= { 0.0f, 1.0f, 0.0f };
-	player->transform.scale = { 10.0f, 10.0f, 10.0f };
+	player->transform.position	= { 0.0f, 5.0f, 0.0f };
+	player->transform.scale = { 1.0f, 1.0f, 1.0f };
 	
 	constexpr float radius = 0.5f;
-	constexpr float halfHeight = 0.5f;
+	constexpr float height = 2.0f;
 	auto* rigidbody = player->AddComponent<CapsuleRigidbodyComponent>(
 		BodyType::Dynamic,
 		radius,
-		halfHeight,
+		height,
 		100.f
 	);
+
+	auto* meshRenderer = player->AddComponent<MeshRenderer>(Mesh::CreateCapsule(radius, height));
+	meshRenderer->SetColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 	// 重力をつける
 	rigidbody->SetUseGravity(true);

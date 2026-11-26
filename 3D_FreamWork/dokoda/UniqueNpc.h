@@ -1,6 +1,6 @@
 #pragma once
-#pragma once
-
+#include <DirectXMath.h>
+using namespace DirectX;
 class Scene;
 class GameObject;
 enum class UniqueNpcType
