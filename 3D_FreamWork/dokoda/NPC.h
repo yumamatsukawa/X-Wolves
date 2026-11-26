@@ -1,7 +1,8 @@
 #pragma once
-
 class Scene;
 class GameObject;
+#include <DirectXMath.h>
+using namespace DirectX;
 enum class NpcType
 {
     Zombie,//ゾンビ

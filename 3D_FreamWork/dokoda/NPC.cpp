@@ -10,37 +10,28 @@ GameObject* CreateNpc(Scene& scene, NpcType type, XMFLOAT3 pos)
 	npc->SetTag(std::string("NPC"));
 	npc->transform.position = pos;
 	npc->transform.scale = {10.0f,10.0f,10.0f};
+	auto* meshRenderer = npc->AddComponent<MeshRenderer>(Mesh::CreateCube());
 	switch (type)
 	{
 	case NpcType::Zombie:
+		meshRenderer->SetColor(1.0f, 0.0f, 0.0f, 1.0f);
 		break;
 	case NpcType::Vampire:
+		meshRenderer->SetColor(0.0f, 1.0f, 0.0f, 1.0f);
 		break;
 	case NpcType::Ghost:
+		meshRenderer->SetColor(0.0f, 0.0f, 1.0f, 1.0f);
 		break;
 	case NpcType::Witch:
+		meshRenderer->SetColor(1.0f, 1.0f, 0.0f, 1.0f);
 		break;
 	case NpcType::Reaper:
+		meshRenderer->SetColor(1.0f, 1.0f, 1.0f, 1.0f);
 		break;
 	default:
 		break;
 	}
-	int randomColor = Math::RandomRange(0, static_cast<int>(ColorType::Count)-1);
-	auto* meshRenderer = npc->AddComponent<MeshRenderer>(Mesh::CreateCube());
-	switch (static_cast<ColorType>(randomColor))
-	{
-	case ColorType::Red:
-		meshRenderer->SetColor(1.0f, 0.0f, 0.0f, 1.0f);
-		break;
-	case ColorType::Blue:
-		meshRenderer->SetColor(0.0f, 1.0f, 0.0f, 1.0f);
-		break;
-	case ColorType::Green:
-		meshRenderer->SetColor(0.0f, 0.0f, 1.0f, 1.0f);
-		break;
-	case ColorType::Yellow:
-		meshRenderer->SetColor(1.0f, 1.0f, 0.0f, 1.0f);
-		break;
-	}
+	
+	
 	return npc;
 }
