@@ -102,6 +102,18 @@
 		<ClInclude Include="GameManager.h">
 			<Filter>Components</Filter>
 		</ClInclude>
+		<ClCompile Include="EventManager.h">
+			<Filter>Components</Filter>
+		</ClCompile>
+		<ClInclude Include="EventManager.h">
+			<Filter>Components</Filter>
+		</ClInclude>
+		<ClInclude Include="MissionManager.h">
+			<Filter>Components</Filter>
+		</ClInclude>
+		<ClInclude Include="ManagerObject.h">
+			<Filter>Objects</Filter>
+		</ClInclude>
 		<ClInclude Include="NpcController.h">
 			<Filter>Components</Filter>
 		</ClInclude>

@@ -9,7 +9,7 @@ void GameScene::Init()
     CreateGround(*this);
     CreatePlayer(*this);
     CreateCamera(*this);
-    CreateNpc(*this);
+    //CreateNpc(*this);
 }
 
 void GameScene::Uninit()
