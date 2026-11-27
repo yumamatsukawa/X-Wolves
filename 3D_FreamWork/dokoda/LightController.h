@@ -42,4 +42,3 @@ public:
 
 };
 
-GameObject* CreateLight(Scene& scene);
