@@ -3,14 +3,14 @@
 #include "../Engine/Core/GameObject.h"
 #include"../Engine/Render3D/MeshRenderer.h"
 #include"../Engine/Core/MathUtil.h"
+#include "../Engine/Physics/RigidbodyComponent.h"
 
 GameObject* CreateNpc(Scene& scene, NpcType type, XMFLOAT3 pos)
 {
 	GameObject* npc = scene.CreateObject("Npc", "Npc");
 	npc->SetTag(std::string("NPC"));
 	npc->transform.position = pos;
-	npc->transform.scale = {10.0f,10.0f,10.0f};
-	auto* meshRenderer = npc->AddComponent<MeshRenderer>(Mesh::CreateCube());
+	auto* meshRenderer = npc->AddComponent<MeshRenderer>(Mesh::CreateCapsule(npc->transform.scale.x / 2, npc->transform.scale.y));
 	switch (type)
 	{
 	case NpcType::Zombie:
@@ -31,6 +31,19 @@ GameObject* CreateNpc(Scene& scene, NpcType type, XMFLOAT3 pos)
 	default:
 		break;
 	}
+
+	auto* rigidbody = npc->AddComponent<CapsuleRigidbodyComponent>(
+		BodyType::Dynamic,
+		npc->transform.scale.x / 2,
+		npc->transform.scale.y,
+		100.f,
+		100.f,
+		true
+	);
+	// 重力をつける
+	rigidbody->SetUseGravity(false);
+	// 回転を停止して転倒を防止する
+	rigidbody->SetFreezeRotation(true);
 	
 	
 	return npc;

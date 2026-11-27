@@ -20,16 +20,22 @@
     <ClCompile Include="Map.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
-    <ClCompile Include="OniController.cpp">
+    <ClCompile Include="Oni.cpp">
       <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="OniCameraController.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="OniController.cpp">
+      <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerController.cpp">
+    <ClCompile Include="PlayerCameraController.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="cameracontroller.cpp">
+    <ClCompile Include="PlayerController.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="MissionComponent.cpp">
@@ -99,16 +105,22 @@
     <ClInclude Include="Map.h">
       <Filter>Objects</Filter>
     </ClInclude>
-    <ClInclude Include="OniController.h">
+    <ClInclude Include="Oni.h">
       <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="OniCameraController.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="OniController.h">
+      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Objects</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerController.h">
+    <ClInclude Include="PlayerCameraController.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="cameracontroller.h">
+    <ClInclude Include="PlayerController.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="MissionComponent.h">

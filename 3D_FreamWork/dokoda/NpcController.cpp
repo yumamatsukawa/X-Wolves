@@ -114,6 +114,7 @@ void NpcController::Init()
         }
     }
 }
+
 void NpcController::Update(float dt)
 {
     if (Time::IsPaused()) return;
@@ -158,6 +159,7 @@ void NpcController::Update(float dt)
         }
     }
 }
+
 void NpcController::NpcSetDestination(int NPC_No)
 {
     int random = Math::RandomRange(0, 1);
@@ -224,6 +226,7 @@ void NpcController::NpcSetDestination(int NPC_No)
    
 	
 }
+
 void NpcController::NpcWait(int NPC_No, float dt)
 {
     
@@ -269,6 +272,7 @@ void NpcController::NpcWait(int NPC_No, float dt)
         }
     }
 }
+
 void NpcController::NpcMove(int NPC_No, float dt)
 {
     // 経路が見つかっているか確認
@@ -324,6 +328,7 @@ void NpcController::NpcMove(int NPC_No, float dt)
         }
     }
 }
+
 void NpcController::NpcSpecialAction(int NPC_No, float dt)
 {
     // 経過時間を加算
@@ -373,6 +378,7 @@ void NpcController::NpcSpecialAction(int NPC_No, float dt)
         }
     }
 }
+
 void NpcController::NpcDance(int NPC_No, float dt)
 {
 
@@ -421,6 +427,7 @@ void NpcController::NpcDance(int NPC_No, float dt)
         }
     }
 }
+
 void NpcController::OnDanceEvent()
 {
     for (int i = 0; i < npcCount; i++)
@@ -428,6 +435,7 @@ void NpcController::OnDanceEvent()
         NPC[i]->Movetype = MoveType::Dance;
     }
 }
+
 void NpcController::OnJukeboxEvent()
 {
     XMFLOAT3 jukebox= { 0,0,0 };
@@ -457,6 +465,7 @@ void NpcController::OnJukeboxEvent()
         NPC[selectedNPC]->IsMoving = true;
     }
 }
+
 void NpcController::OnSwitchEvent()
 {
     XMFLOAT3 switchPosition = { 0,0,0 };
@@ -480,6 +489,7 @@ void NpcController::OnSwitchEvent()
         NPC[selectedNPC]->IsMoving = true;
     }
 }
+
 bool NpcController::CheckDestination(
     const XMFLOAT3& destination,
     const XMFLOAT3& buildingPosition,
@@ -498,10 +508,12 @@ bool NpcController::CheckDestination(
 
     return true; // 移動可能
 }
+
 void NpcController::Setup(NavGridComponent* navigation)
 {
       nav = navigation;
 }
+
 void NpcController::NpcJump(int NPC_No, float dt)
 {
     // 地面にいない場合はジャンプできない
@@ -546,6 +558,7 @@ void NpcController::NpcJump(int NPC_No, float dt)
         NPC[NPC_No]->IsJumping = true;
     }
 }
+
 bool NpcController::CheckGrounded(GameObject* npc)
 {
     // NPCの現在位置
