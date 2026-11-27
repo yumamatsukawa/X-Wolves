@@ -54,7 +54,10 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="Light.cpp">
-      <Filter>Components</Filter>
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="GimmickBuilding.cpp">
+      <Filter>Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -121,7 +124,10 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Light.h">
-      <Filter>Components</Filter>
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="GimmickBuilding.h">
+      <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
