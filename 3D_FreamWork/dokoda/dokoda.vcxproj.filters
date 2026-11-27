@@ -58,6 +58,15 @@
     </ClCompile>
     <ClCompile Include="ManagerObject.cpp">
       <Filter>Objects</Filter>
+	</ClCompile>
+    <ClCompile Include="LightController.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="GimmickController.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -128,6 +137,15 @@
     </ClInclude>
     <ClInclude Include="NpcSpawner.h">
       <Filter>Objects</Filter>
+	</ClInclude>
+    <ClInclude Include="LightController.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GimmickController.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
