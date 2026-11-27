@@ -1,6 +1,4 @@
 #include"LightController.h"
-#include"../Engine/Core/Component.h"
-#include"../Engine/Render3D/LightComponent.h"
 #include"../Engine/Core/Input.h"
 #include "../Engine/Core/GameEngine.h"
 #include<algorithm>

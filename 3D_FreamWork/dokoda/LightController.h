@@ -1,5 +1,4 @@
 #pragma once
-
 #include"../Engine/Core/Component.h"
 #include"../Engine/Render3D/LightComponent.h"
 #include <DirectXMath.h>
