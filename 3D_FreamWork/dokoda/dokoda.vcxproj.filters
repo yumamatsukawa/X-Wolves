@@ -19,8 +19,7 @@
     </ClCompile>
     <ClCompile Include="Map.cpp">
       <Filter>Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Oni.cpp">
+    </ClCompile>    <ClCompile Include="Oni.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="OniCameraController.cpp">
@@ -73,6 +72,9 @@
     </ClCompile>
     <ClCompile Include="Light.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Navigation.cpp">
+      <Filter>Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -158,6 +160,9 @@
     </ClInclude>
     <ClInclude Include="Light.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Navigation.h">
+      <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
