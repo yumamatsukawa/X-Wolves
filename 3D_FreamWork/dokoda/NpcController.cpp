@@ -81,9 +81,13 @@ void NpcController::Init()
             NPC[npcCount] = new NpcData();
             XMFLOAT3 pos;
 
+            // 行動データの確保(全メンバを0で初期化)
+            NPC[npcCount]->ActionData = new NpcAction{};
+
             //行動できるエリアの受け取るプログラムが必要
-            NPC[npcCount]->ActionData->MINMove.x=0;
-            NPC[npcCount]->ActionData->MAXMove.x=100;
+            // 移動範囲(Navigationの格子 -50〜50 の内側)
+            NPC[npcCount]->ActionData->MINMove = { -45.0f, 0.0f, -45.0f };
+            NPC[npcCount]->ActionData->MAXMove = { 45.0f, 0.0f, 45.0f };
 
           
             while (true)
@@ -95,7 +99,7 @@ void NpcController::Init()
             // 目的地が建物と重なっていないかチェック
                 if (CheckDestination({ x, 0.0f, z }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }))
                 {
-                    pos = { x, 0.0f, z };
+                    pos = { x, 1.0f, z };
                     break;
                 }
             }
@@ -165,11 +169,11 @@ void NpcController::NpcSetDestination(int NPC_No)
     int random = Math::RandomRange(0, 1);
     if (random==0)
     {
-        NPC[npcCount]->Path->SetSpeed(NpcWalkSpeed);
+        NPC[NPC_No]->Path->SetSpeed(NpcWalkSpeed);
     }
     else
     {
-        NPC[npcCount]->Path->SetSpeed(NpcDashSpeed);
+        NPC[NPC_No]->Path->SetSpeed(NpcDashSpeed);
     }
     random = Math::RandomRange(0, 1);
 
@@ -178,6 +182,8 @@ void NpcController::NpcSetDestination(int NPC_No)
         // ポイントが存在するか確認
         if (MissionPoints.empty())
         {
+            // ポイントが無い時は、その場で特殊行動する(IsMovingのままだと止まり続ける)
+            NPC[NPC_No]->IsMoving = false;
             return;
         }
 
@@ -207,12 +213,10 @@ void NpcController::NpcSetDestination(int NPC_No)
         
        
         //ここに建物の位置とサイズを取得する処理を追加する必要があります。
-        Scene* scene = GetOwner()->GetScene();
-
-        GameObject* Map = CreateGround(*scene);
+        // (建物の判定は未実装。今は位置とサイズを0にして呼んでいる)
 
     // 目的地が建物と重なっていないかチェック
-        if (CheckDestination({ x, 0.0f, z }, Map->transform.position, Map->transform.scale))
+        if (CheckDestination({ x, 0.0f, z }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }))
         {
             NPC[NPC_No]->Destination = { x, 0.0f, z };
             NPC[NPC_No]->Path->SetTargetPosition(
@@ -275,8 +279,8 @@ void NpcController::NpcWait(int NPC_No, float dt)
 
 void NpcController::NpcMove(int NPC_No, float dt)
 {
-    // 経路が見つかっているか確認
-    if (!NPC[NPC_No]->Path->HasPath())
+    // 経路が見つかっているか確認(到着すると経路は消えるので、到着した時は先へ進む)
+    if (!NPC[NPC_No]->Path->HasPath() && !NPC[NPC_No]->Path->HasArrived())
     {
         return;
     }
@@ -422,6 +426,7 @@ void NpcController::NpcDance(int NPC_No, float dt)
                     break;
                 }
 
+                NPC[NPC_No]->Movetype = action.MoveType;
                 break;
             }
         }
@@ -512,6 +517,12 @@ bool NpcController::CheckDestination(
 void NpcController::Setup(NavGridComponent* navigation)
 {
       nav = navigation;
+
+      // AddComponentの中でInitが先に呼ばれるので、生成済みのNPCにもここで格子を渡す
+      for (int i = 0; i < npcCount; i++)
+      {
+          NPC[i]->Path->SetNavigation(nav);
+      }
 }
 
 void NpcController::NpcJump(int NPC_No, float dt)

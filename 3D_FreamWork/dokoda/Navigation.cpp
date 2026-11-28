@@ -1,4 +1,4 @@
-#include "Navigation.h"
+ï»¿#include "Navigation.h"
 #include "../Engine/Core/Scene.h"
 #include "../Engine/Core/GameObject.h"
 #include "../Engine/Behavior/NavGridComponent.h"
@@ -9,17 +9,17 @@ GameObject* CreateNavigation(Scene& scene) {
 
 	NavGridSettings settings;
 
-	// 100 * 100 ‚ÌGrid‚ðì¬
-	settings.origin = { -50.0f, 0.0f, -50.0f };		// ì¬ˆÊ’u
-	settings.size = { 100.0f, 100.0f };				// ‘S‘Ì‚Ì‘å‚«‚³	
-	settings.cellSize = 5.0f;						// 1ƒ}ƒX‚Ì‘å‚«‚³
-	settings.plane = MovePlane::XZ;					// •½–Ê‚ÌŒü‚«
-	settings.agentRadius = 5.0f;					// NPC‚Ì‘å‚«‚³ (10.0f) ‚Ì”¼•ª
-	settings.baseHeight = 0.5f;						// ’n–Ê‚Ì‚‚³ (map‚Ìy‚Ípos0.0f, scl 1.0f)
-	settings.agentHeight = 10.0f;					// NPC‚Ì‚‚³ (10.0f)
+	// 100 * 100 ã®Gridã‚’ä½œæˆ
+	settings.origin = { -50.0f, 0.0f, -50.0f };		// ä½œæˆä½ç½®
+	settings.size = { 100.0f, 100.0f };				// å…¨ä½“ã®å¤§ãã•	
+	settings.cellSize = 1.0f;						// 1ãƒžã‚¹ã®å¤§ãã•
+	settings.plane = MovePlane::XZ;					// å¹³é¢ã®å‘ã
+	settings.agentRadius = 0.5f;					// NPCã®å¤§ãã• (1.0f) ã®åŠåˆ†
+	settings.baseHeight = 0.5f;						// åœ°é¢ã®é«˜ã• (mapã®yã¯pos0.0f, scl 1.0f)
+	settings.agentHeight = 1.0f;					// NPCã®é«˜ã• (1.0f)
 
-	// Šù’è’l30.0f‚Å‚ÍagentHeight(10.0f)‚ð’´‚¦‚é‚½‚ß1.0f‚ÉÝ’è
-	settings.maxStepHeight = 1.0f;					// NPC‚ªæ‚è‰z‚¦‚ç‚ê‚é’i·‚Ì‚‚³
+	// æ—¢å®šå€¤30.0fã§ã¯agentHeight(1.0f)ã‚’è¶…ãˆã‚‹ãŸã‚0.3fã«è¨­å®š
+	settings.maxStepHeight = 0.3f;					// NPCãŒä¹—ã‚Šè¶Šãˆã‚‰ã‚Œã‚‹æ®µå·®ã®é«˜ã•
 
 	navigation->AddComponent<NavGridComponent>(settings);
 

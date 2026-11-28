@@ -19,7 +19,8 @@
     </ClCompile>
     <ClCompile Include="Map.cpp">
       <Filter>Objects</Filter>
-    </ClCompile>    <ClCompile Include="Oni.cpp">
+    </ClCompile>
+    <ClCompile Include="Oni.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="OniCameraController.cpp">
@@ -63,17 +64,17 @@
     </ClCompile>
     <ClCompile Include="ManagerObject.cpp">
       <Filter>Objects</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="LightController.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="GimmickController.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="Light.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="Navigation.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
   </ItemGroup>
@@ -151,17 +152,17 @@
     </ClInclude>
     <ClInclude Include="NpcSpawner.h">
       <Filter>Objects</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="LightController.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="GimmickController.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="Light.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="Navigation.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
       <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>

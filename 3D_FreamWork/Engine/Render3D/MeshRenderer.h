@@ -31,6 +31,25 @@ private:
     bool frustumCulling = false;     // trueなら、画面の外にある時は描かない
     float boundingRadius = 0.f;      // 画面判定用: 原点から一番遠い頂点までの距離(拡大する前)
     LodSettings lod;                 // 距離で省く設定(既定はすべて使わない)
+    bool ignoreScale = false;        // trueなら、transform.scale(親の分も含む)を掛けずに描く
+
+    // 描画と判定に使うワールド行列
+    XMMATRIX GetDrawMatrix() {
+        const Transform& transform = GetOwner()->transform;
+        XMMATRIX world = transform.GetWorldMatrix();
+        if (!ignoreScale) return world;
+
+        // 自分から親へ回転だけを重ねて、位置は本来の行列のもの(親のscaleで離れた場所)を使う
+        XMMATRIX unscaled = XMMatrixIdentity();
+        for (const Transform* t = &transform; t != nullptr; t = t->GetParent()) {
+            unscaled *= XMMatrixRotationRollPitchYaw(
+                XMConvertToRadians(t->rotate.x),
+                XMConvertToRadians(t->rotate.y),
+                XMConvertToRadians(t->rotate.z));
+        }
+        unscaled.r[3] = world.r[3];
+        return unscaled;
+    }
 
     // material.texture が変わっていたら、画像を借り直す(新しい画像を先に借りてから、前の画像を返す。同じ画像は読み直さない)
     void SyncTexture() {
@@ -109,6 +128,11 @@ public:
     void SetFrustumCulling(bool enabled) { frustumCulling = enabled; }
     bool IsFrustumCulling() const { return frustumCulling; }
 
+    // trueにすると、transform.scale(親の分も含む)で引き伸ばさずに描く(既定はfalse)。位置と回転は反映する。
+    // Mesh::CreateCapsule のように実際の大きさで作った形を、当たり判定と合わせる時に使う
+    void SetIgnoreScale(bool value) { ignoreScale = value; }
+    bool IsIgnoreScale() const { return ignoreScale; }
+
     // 距離で省く設定(drawDistance / shadowDistance / outlineDistance。0=使わない)。まとめて渡す
     // 例: meshRenderer->SetLod({ 6000.f, 2500.f, 1500.f });
     void SetLod(const LodSettings& settings) { lod = settings; }
@@ -124,24 +148,28 @@ public:
     // 影のパス: 深度だけを描く(Shadow::Render が、アクティブで有効な時だけ呼ぶ)
     void DrawShadow(const Shadow::LightView& light) override {
         if (!material.castShadow) return;
+        const XMMATRIX world = GetDrawMatrix();
         // 遠い物は影を落とさない
-        if (lod.shadowDistance > 0.f && Lod::IsBeyond(GetOwner()->transform.GetWorldMatrix(), boundingRadius, lod.shadowDistance)) {
+        if (lod.shadowDistance > 0.f && Lod::IsBeyond(world, boundingRadius, lod.shadowDistance)) {
             RenderStats::AddLodCulled();
             return;
         }
-        mesh->DrawDepth(GetOwner()->transform.GetWorldMatrix(), light.view, light.proj);
+        mesh->DrawDepth(world, light.view, light.proj);
     }
 
     void Draw() override {
+        // 本体・枠線・画面外/距離の判定で同じ行列を使う
+        const XMMATRIX world = GetDrawMatrix();
+
         // 遠い物は描かない(枠線も描かない)
-        if (lod.drawDistance > 0.f && Lod::IsBeyond(GetOwner()->transform.GetWorldMatrix(), boundingRadius, lod.drawDistance)) {
+        if (lod.drawDistance > 0.f && Lod::IsBeyond(world, boundingRadius, lod.drawDistance)) {
             RenderStats::AddLodCulled();
             return;
         }
 
         // 画面の外なら描かない(スカイボックスのように深度を書かない物は、画面全体を覆うので判定しない)
         if (frustumCulling && material.depthWrite &&
-            !Visibility::IsTransformedSphereInView3D(GetOwner()->transform.GetWorldMatrix(), boundingRadius)) {
+            !Visibility::IsTransformedSphereInView3D(world, boundingRadius)) {
             Visibility::CountCulled();
             return;
         }
@@ -149,19 +177,18 @@ public:
         // material.texture が手で書き換えられていたら、ここで画像を借り直す
         SyncTexture();
 
-        // Transform::GetWorldMatrix()が親子階層を内部で処理してくれるので、
-        // ここではローカルのtransformをそのまま渡せばよい。
+        // 親子階層は GetDrawMatrix(中の Transform::GetWorldMatrix)で処理済み。
         // カメラは2D(GetCamera)とは別の3D専用カメラ(GetCamera3D)を使う。
         // 光を使うかどうか(unlit)は、material.lit がシェーダーに伝える
-        mesh->Draw(GetOwner()->transform, Image::GetCamera3D(), material, Image::GetLight());
+        mesh->Draw(world, Image::GetCamera3D(), material, Image::GetLight());
 
         // 枠線: 本物を描いた直後に描く(本物を深度に書かない物=スカイボックス・半透明の板には付けない)。遠い物には付けない
         if (material.outlineWidth > 0.f && material.depthWrite) {
-            if (lod.outlineDistance > 0.f && Lod::IsBeyond(GetOwner()->transform.GetWorldMatrix(), boundingRadius, lod.outlineDistance)) {
+            if (lod.outlineDistance > 0.f && Lod::IsBeyond(world, boundingRadius, lod.outlineDistance)) {
                 RenderStats::AddLodCulled();
                 return;
             }
-            mesh->DrawOutline(GetOwner()->transform.GetWorldMatrix(), Image::GetCamera3D(), material.outlineColor, material.outlineWidth, material.outlineSeeThrough);
+            mesh->DrawOutline(world, Image::GetCamera3D(), material.outlineColor, material.outlineWidth, material.outlineSeeThrough);
         }
     }
 

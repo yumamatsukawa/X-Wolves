@@ -50,8 +50,17 @@ void PlayerCameraController::Update(float dt)
 	// プレイヤーの少し上を注視点にして、視線の逆向きに離れた位置から見る
 	const XMFLOAT3 target = player->transform.position + XMFLOAT3{ 0.0f, TARGET_HEIGHT, 0.0f };
 
+	// 上を向いて地面にめり込む時は、カメラを注視点に近づける
+	float distance = CAMERA_DISTANCE;
+	if (lookDir.y > 0.0f)
+	{
+		// カメラの高さ = target.y - lookDir.y * distance が下限になる距離
+		const float maxDistance = (target.y - MIN_CAMERA_HEIGHT) / lookDir.y;
+		if (distance > maxDistance) distance = maxDistance;
+	}
+
 	Camera& camera3D = Image::GetCamera3D();
-	camera3D.position = target - lookDir * CAMERA_DISTANCE;
+	camera3D.position = target - lookDir * distance;
 	camera3D.target = target;
 	camera3D.up = { 0.0f, 1.0f, 0.0f };
 }

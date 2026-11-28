@@ -7,8 +7,8 @@
 GameObject* CreateGround(Scene& scene) {
     // タグを"Ground"にしておくと、VisionComponentの視線がさえぎられる(付け忘れると素通しになる)
     GameObject* Ground = scene.CreateObject("Ground", "Ground");
-    Ground->transform.position = { 0.0f, 0.0f, 0.0f };
-    Ground->transform.scale = { 1000.0f, 1.0f, 1000.0f };
+    Ground->transform.position = { 0.0f, -0.05f, 0.0f };
+    Ground->transform.scale = { 100.0f, 0.1f, 100.0f };
 
     // 見た目(画像を引き伸ばして、灰色にする)
     auto* sprite = Ground->AddComponent<MeshRenderer>(Mesh::CreateCube());

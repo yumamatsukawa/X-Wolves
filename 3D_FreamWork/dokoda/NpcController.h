@@ -7,7 +7,7 @@
 #include "../Engine/Core/MathUtil.h"
 #include"../Engine/Behavior/PathFollowComponent.h"
 #include"../Engine/Core/EventBus.h"
-#define NPC_MAX (100)
+#define NPC_MAX (10)
 class NavGridComponent;
 class NpcController : public Component {
 private:

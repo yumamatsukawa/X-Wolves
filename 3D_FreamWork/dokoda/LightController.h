@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include"../Engine/Core/Component.h"
 #include"../Engine/Render3D/LightComponent.h"
@@ -9,30 +9,30 @@ class LightController : public Component
 private:
 	LightComponent* light = nullptr;
 
-	//ˆê•bŠÔ‚Ì‰ñ“]Šp“x
+	//ä¸€ç§’é–“ã®å›è»¢è§’åº¦
 	float rotateSpeed = 90.0f;
 
-	//ã‰º•ûŒü‚Ì§ŒÀ
+	//ä¸Šä¸‹æ–¹å‘ã®åˆ¶é™
 	float minPitch = -80.0f;
 	float maxPitch = 80.0f;
 
-
-	//‹S‚ğÆ‚ç‚µ‚Ä‚¢‚é‚©
+	//é¬¼ã‚’ç…§ã‚‰ã—ã¦ã„ã‚‹ã‹
 	bool hitOni = false;
-	//–Ú‚­‚ç‚Ü‚µó‘Ô
+	//ç›®ãã‚‰ã¾ã—çŠ¶æ…‹
 	bool oniBlind = false;
-	//–Ú‚­‚ç‚Ü‚µŠÔ
+	//ç›®ãã‚‰ã¾ã—æ™‚é–“
 	float blindTimer = 0.0f;
-	//–Ú‚­‚ç‚Ü‚µŒo‰ßŠÔ
+	//ç›®ãã‚‰ã¾ã—çµŒéæ™‚é–“
 	float blindDuration = 3.0f;
 
-
+	//rotateã®å‘ãã‚’ãƒ©ã‚¤ãƒˆã«åæ˜ ã™ã‚‹
+	void ApplyDirection();
 
 public:
 	void Init() override;
 	void Update(float dt) override;
 
-	//‹S‚ÉŒõ‚ª“–‚½‚Á‚½
+	//é¬¼ã«å…‰ãŒå½“ãŸã£ãŸæ™‚
 	void HitOni();
 
 	bool IsoniBlind() const

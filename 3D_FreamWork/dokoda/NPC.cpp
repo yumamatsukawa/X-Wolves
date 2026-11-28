@@ -10,7 +10,10 @@ GameObject* CreateNpc(Scene& scene, NpcType type, XMFLOAT3 pos)
 	GameObject* npc = scene.CreateObject("Npc", "Npc");
 	npc->SetTag(std::string("NPC"));
 	npc->transform.position = pos;
+	npc->transform.scale = { 1.0f, 2.0f, 1.0f };
 	auto* meshRenderer = npc->AddComponent<MeshRenderer>(Mesh::CreateCapsule(npc->transform.scale.x / 2, npc->transform.scale.y));
+	meshRenderer->SetIgnoreScale(true);
+
 	switch (type)
 	{
 	case NpcType::Zombie:
